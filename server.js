@@ -77,7 +77,10 @@ function sessionId(req, res) {
   const m = /(?:^|;\s*)sid=([a-f0-9]{32})/.exec(req.headers.cookie || "");
   if (m) return m[1];
   const sid = crypto.randomBytes(16).toString("hex");
-  res.setHeader("Set-Cookie", `sid=${sid}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_TTL}`);
+  // Secure behind HTTPS (ComputeSphere serves the app over HTTPS only); a plain
+  // http://localhost run keeps working without it.
+  const secure = req.headers["x-forwarded-proto"] === "https" ? "; Secure" : "";
+  res.setHeader("Set-Cookie", `sid=${sid}; Path=/; HttpOnly; SameSite=Lax; Max-Age=${SESSION_TTL}${secure}`);
   return sid;
 }
 
