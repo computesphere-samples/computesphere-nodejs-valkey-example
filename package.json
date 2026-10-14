@@ -1,0 +1,11 @@
+{
+  "name": "computesphere-nodejs-valkey-example",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A visit counter with sessions, kept in Valkey.",
+  "main": "server.js",
+  "license": "MIT",
+  "scripts": { "start": "node server.js" },
+  "engines": { "node": ">=22" },
+  "dependencies": { "redis": "4.7.1" }
+}
